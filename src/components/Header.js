@@ -9,6 +9,7 @@ const Container = styled.header`
   display: flex;
   align-items: center;
   margin-bottom: 40px;
+  box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.5);
 `;
 
 const List = styled.ul`

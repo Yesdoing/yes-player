@@ -4,7 +4,9 @@ import GlobalStyles from 'components/GlobalStyles';
 import Header from "./Header";
 import AlbumJacket from "./AlbumJacket";
 import Slider from "./Slider";
-import 'antd/dist/antd.css';
+import ControlBar from "./ControlBar";
+import Footer from "./Footer";
+
 
 const Container = styled.div`
   width: 100%;
@@ -21,6 +23,8 @@ function App() {
         <Header />
         <AlbumJacket />
         <Slider />
+        <ControlBar />
+        <Footer />
       </Container>
     </>
   );
