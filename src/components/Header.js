@@ -8,6 +8,7 @@ const Container = styled.header`
   height: 100px;
   display: flex;
   align-items: center;
+  margin-bottom: 40px;
 `;
 
 const List = styled.ul`

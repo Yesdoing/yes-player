@@ -1,17 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
 import { Slider as AntSlider } from 'antd';
-
 
 const Container = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
 `;
 
-const Time = styled.span``;
+const Time = styled.span`
+  font-size: 12px;
+  color: #bdc3c7;
+`;
+
+const CustomSlider = styled(AntSlider)`
+  width: 70%;
+  margin: 0 10px;
+  .ant-slider-track {
+      background-color: #FF5252 !important;
+    }
+  
+  .ant-slider-handle {
+    background-color: #FF5252;
+    border: solid 2px #FF5252; 
+    box-shadow: 0px 0px 5px 5px rgba(130,64,72,0.85);
+  }
+`;
 
 const Slider = () => {
 
@@ -27,7 +44,7 @@ const Slider = () => {
   return (
     <Container>
       <Time>0:00</Time>
-      <AntSlider defaultValue={30} onChange={onChange} onAfterChange={onAfterChange} />
+      <CustomSlider defaultValue={30} onChange={onChange} onAfterChange={onAfterChange} />
       <Time>5:29</Time>
     </Container>
   )
