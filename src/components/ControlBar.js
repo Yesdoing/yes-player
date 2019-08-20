@@ -5,9 +5,10 @@ import { PlayArrow, FastForward, FastRewind, Pause } from "@material-ui/icons";
 
 const Container = styled.div`
   width: 100%;
+  height: 90px;
   display: flex;
   justify-content: space-around;
-  margin-top: 100px;
+  align-items: center;
 `;
 
 const IconContainer = styled.div`
@@ -20,6 +21,11 @@ const IconContainer = styled.div`
   border-radius: 50%;
   &:nth-child(2) {
     border: ${props => (props.play ? `1px solid #FF5252` : "1px solid #929498")};
+  }
+
+  &:active {
+    color: white;
+    border-color: white;
   }
 `;
 

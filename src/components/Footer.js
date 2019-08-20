@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.footer`
-  position: fixed;
-  bottom: 0;
   width: 100%;
+  height: 135px;
   padding: 8px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const FooterContainer = styled.div`
 `;
 
 const TextButton = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: ${props => props.clicked ? "#FF5252" : "#929498"};
 `;
 
