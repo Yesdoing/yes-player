@@ -12,10 +12,9 @@ const Container = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   margin-bottom: 40px;
-  box-shadow: 0px 0px 21px 3px rgba(0,0,0,0.75);
 `;
 
 const JacketImage = styled.div`
@@ -24,6 +23,9 @@ const JacketImage = styled.div`
   background-image: url("https://i1.sndcdn.com/artworks-000579908738-4b0so0-t500x500.jpg");
   background-size: cover;
   background-position: center center;
+  border-radius: 50%;
+  border: 15px solid black;
+  box-shadow: 0px 0px 21px 3px rgba(0,0,0,0.50);
 `;
 
 const TitleContainer = styled.div``;

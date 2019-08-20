@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { PlayArrow, FastForward, FastRewind, Pause } from "@material-ui/icons";
+import { PlayArrow, FastForward, FastRewind, Pause, Shuffle, Repeat } from "@material-ui/icons";
 
 const Container = styled.div`
   width: 100%;
-  height: 10vh;
+  height: 15vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -17,15 +17,17 @@ const IconContainer = styled.div`
   align-items: center;
   width: 60px;
   height: 60px;
-  color: #929498;
-  border-radius: 50%;
-  &:nth-child(2) {
-    border: ${props => (props.play ? `1px solid #FF5252` : "1px solid #929498")};
+  color: white;
+  
+  &:first-child, &:last-child {
+    color: #929498;
   }
 
+  
+
   &:active {
-    color: white;
-    border-color: white;
+    color: #929498;
+    border-color: #929498;
   }
 `;
 
@@ -34,7 +36,10 @@ const ControlBar = () => {
   return (
     <Container>
       <IconContainer>
-        <FastRewind fontSize="large" />
+        <Shuffle />
+      </IconContainer>
+      <IconContainer>
+        <FastRewind />
       </IconContainer>
       <IconContainer play={play}>
         {
@@ -42,7 +47,10 @@ const ControlBar = () => {
         }
       </IconContainer>
       <IconContainer>
-        <FastForward fontSize="large" />
+        <FastForward />
+      </IconContainer>
+      <IconContainer>
+        <Repeat />
       </IconContainer>
     </Container>
   );

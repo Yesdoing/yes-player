@@ -5,30 +5,28 @@ import Header from "./Header";
 import AlbumJacket from "./AlbumJacket";
 import Slider from "./Slider";
 import ControlBar from "./ControlBar";
-import Footer from "./Footer";
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  max-width: 550px;
   background-color: #2f3640;
 `;
 
+
 const ControlContainer = styled.div`
-  height: 20vh;
+  height: 30vh;
 `;
 
-function App() {
+function App() { 
   return (
     <>
       <GlobalStyles />
       <Container>
-        <Header />
         <AlbumJacket />
         <ControlContainer>
           <Slider />
           <ControlBar />
-          <Footer />
+          <Header />
         </ControlContainer>
       </Container>
     </>

@@ -23,10 +23,13 @@ const CustomSlider = styled(AntSlider)`
       background-color: #FF5252 !important;
     }
   
+    .ant-slider-rail {
+      background-color: #929498;
+    }
+
   .ant-slider-handle {
     background-color: #FF5252;
     border: solid 2px #FF5252; 
-    box-shadow: 0px 0px 5px 5px rgba(130,64,72,0.85);
   }
 `;
 

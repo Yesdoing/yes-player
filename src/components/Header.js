@@ -8,7 +8,7 @@ const Container = styled.header`
   height: 10vh;
   display: flex;
   align-items: center;
-  box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.5);
+
 `;
 
 const List = styled.ul`
@@ -33,7 +33,7 @@ const Text = styled.span`
 `;
 
 const ItemTitle = styled.li`
-  width: 180px;
+  width: 100px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -44,11 +44,8 @@ const Header = () => {
   return (
     <Container>
       <List>
-        <ItemIcon>
-          <PlaylistPlay fontSize="large" />
-        </ItemIcon>
         <ItemTitle>
-          <Text>Now Playing</Text>
+          <Text>YesPlayer</Text>
         </ItemTitle>
         <ItemIcon>
           <PlaylistAdd fontSize="large" />
