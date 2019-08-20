@@ -5,10 +5,10 @@ import { Slider as AntSlider } from 'antd';
 
 const Container = styled.div`
   width: 100%;
+  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px 0;
 `;
 
 const Time = styled.span`

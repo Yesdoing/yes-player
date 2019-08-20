@@ -5,10 +5,9 @@ import { PlaylistAdd, PlaylistPlay } from "@material-ui/icons";
 
 const Container = styled.header`
   width: 100%;
-  height: 100px;
+  height: 10vh;
   display: flex;
   align-items: center;
-  margin-bottom: 40px;
   box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.5);
 `;
 

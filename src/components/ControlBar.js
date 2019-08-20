@@ -5,7 +5,7 @@ import { PlayArrow, FastForward, FastRewind, Pause } from "@material-ui/icons";
 
 const Container = styled.div`
   width: 100%;
-  height: 90px;
+  height: 10vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
