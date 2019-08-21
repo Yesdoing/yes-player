@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { PlaylistAdd, PlaylistPlay } from "@material-ui/icons";
 
-const Container = styled.header`
+const Container = styled.footer`
   width: 100%;
   height: 10vh;
   display: flex;
   align-items: center;
-
 `;
 
 const List = styled.ul`
@@ -40,14 +39,14 @@ const ItemTitle = styled.li`
   justify-content: center;
 `;
 
-const Header = () => {
+const Footer = ({handlePlayer}) => {
   return (
     <Container>
       <List>
         <ItemTitle>
           <Text>YesPlayer</Text>
         </ItemTitle>
-        <ItemIcon>
+        <ItemIcon onClick={handlePlayer}>
           <PlaylistAdd fontSize="large" />
         </ItemIcon>
       </List>
@@ -55,4 +54,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+Footer.propTypes = {
+  handlePlayer: PropTypes.func
+}
+
+export default Footer;
