@@ -39,14 +39,14 @@ const ItemTitle = styled.li`
   justify-content: center;
 `;
 
-const Footer = ({handlePlayer}) => {
+const Footer = ({handleList}) => {
   return (
     <Container>
       <List>
         <ItemTitle>
           <Text>YesPlayer</Text>
         </ItemTitle>
-        <ItemIcon onClick={handlePlayer}>
+        <ItemIcon onClick={handleList}>
           <PlaylistAdd fontSize="large" />
         </ItemIcon>
       </List>
@@ -55,7 +55,7 @@ const Footer = ({handlePlayer}) => {
 };
 
 Footer.propTypes = {
-  handlePlayer: PropTypes.func
+  handleList: PropTypes.func
 }
 
 export default Footer;

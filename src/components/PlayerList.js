@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Search } from "@material-ui/icons";
 import PlayItem from "./PlayItem";
+import Loader from "./Loader";
 
 const Container = styled.div`
-  position: absolute;
-  left: 0;
-  top: ${props => (props.isPlayer ? "0vh" : "71vh")};
+  position: fixed;
+  left: ${props => (props.isList ? "0" : "100vw")};
+  top: 0;
   width: 100%;
   height: 70vh;
   background-color: #ecf0f1;
-  transition: top 0.5s ease-in-out;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  transition: left 0.5s ease-in-out;
   color: black;
   font-size: 16px;
   z-index: 15;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   position: relative;
   width: 100%;
   display: flex;
@@ -71,44 +74,117 @@ const MenuIcon = styled.li`
   }
 `;
 
+const EmptyData = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const ListContainer = styled.div`
   width: 100%;
   display: flex;
+  height: 100%;
+  overflow: scroll;
   flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 30px;
 `;
 
-const PlayerList = ({ isPlayer, selectedMenu, handleSelector }) => {
+const PlayerList = ({
+  isList,
+  selectedMenu,
+  handleSelector,
+  loading,
+  data,
+  error,
+  addMusicList,
+  removeMusicList,
+  inputValue,
+  onChange
+}) => {
+  const LoadingContainer = () => (
+    <ListContainer>
+      <Loader />
+      <Loader />
+      <Loader />
+      <Loader />
+      <Loader />
+      <Loader />
+    </ListContainer>
+  );
+
+  const dataList = useMemo(() => {
+    return data &&
+      data.length > 0 &&
+      data.map((item, index) => (
+        <PlayItem
+          key={index}
+          id={item.id}
+          title={item.title}
+          viewCount={item.viewCount}
+          duration={item.duration}
+          handleList={
+            selectedMenu === "YOUTUBE" ? addMusicList : removeMusicList
+          }
+          isYoutube={selectedMenu === "YOUTUBE"}
+          imgUrl={item.thumbnails}
+        />
+      ));
+  }, [data]);
+
   return (
-    <Container isPlayer={isPlayer}>
+    <Container isList={isList}>
       <InputContainer>
-        <Input placeholder={selectedMenu === 'YOUTUBE' ? "Enter URL or Song Name" : "Search Your PLAYLIST"} />
+        <Input
+          placeholder={
+            selectedMenu === "YOUTUBE"
+              ? "Enter URL or Song Name"
+              : "Search Your PLAYLIST"
+          }
+          value={inputValue}
+          onChange={onChange}
+        />
         <SearchIcon />
       </InputContainer>
       <MenuSelector>
         <MenuIcon>
-          <TextButton selectedMenu={selectedMenu === "YOUTUBE"} onClick={handleSelector}>
+          <TextButton
+            selectedMenu={selectedMenu === "YOUTUBE"}
+            onClick={handleSelector}
+          >
             YOUTUBE
           </TextButton>
         </MenuIcon>
         <MenuIcon>
-          <TextButton selectedMenu={selectedMenu === "PLAYLIST"} onClick={handleSelector}>
+          <TextButton
+            selectedMenu={selectedMenu === "PLAYLIST"}
+            onClick={handleSelector}
+          >
             PLAYLIST
           </TextButton>
         </MenuIcon>
       </MenuSelector>
       <ListContainer>
-        <PlayItem />
-        <PlayItem />
-        <PlayItem />
+        {loading && <LoadingContainer />}
+        {data && data.length > 0 && dataList}
+        {data && data.length === 0 && <EmptyData>데이터가 없습니다.</EmptyData>}
       </ListContainer>
     </Container>
   );
 };
 
 PlayerList.propTypes = {
-  isPlayer: PropTypes.bool.isRequired,
+  isList: PropTypes.bool.isRequired,
   selectedMenu: PropTypes.string.isRequired,
-  handleSelector: PropTypes.func.isRequired
+  handleSelector: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  data: PropTypes.array,
+  error: PropTypes.string,
+  addMusicList: PropTypes.func,
+  removeMusicList: PropTypes.func,
+  inputValue: PropTypes.string.isRequired,
+  onChange: PropTypes.func
 };
 
 export default PlayerList;

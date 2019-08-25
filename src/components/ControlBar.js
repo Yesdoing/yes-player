@@ -31,8 +31,7 @@ const IconContainer = styled.div`
   }
 `;
 
-const ControlBar = () => {
-  const play = false;
+const ControlBar = ({isPlay, handlePlay}) => {
   return (
     <Container>
       <IconContainer>
@@ -41,9 +40,9 @@ const ControlBar = () => {
       <IconContainer>
         <FastRewind />
       </IconContainer>
-      <IconContainer play={play}>
+      <IconContainer play={isPlay} onClick={handlePlay} >
         {
-          play ? <Pause fontSize="large" /> : <PlayArrow fontSize="large" />
+          isPlay ? <Pause fontSize="large" /> : <PlayArrow fontSize="large" />
         }
       </IconContainer>
       <IconContainer>
@@ -55,5 +54,10 @@ const ControlBar = () => {
     </Container>
   );
 };
+
+ControlBar.propTypes = {
+  handlePlay: PropTypes.func,
+  isPlay: PropTypes.bool.isRequired
+}
 
 export default ControlBar;

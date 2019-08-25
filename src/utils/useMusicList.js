@@ -15,11 +15,10 @@ export default function useMusicList(keyword) {
        
        const youtubeIdList = items.map(item => item.id.videoId).join(',');
        const { data: { items: results }} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${youtubeIdList}&key=${process.env.REACT_APP_API_KEY}`);
-       const data = results.map( item => ({
+       const data = results && results.length > 0 && results.map( item => ({
           id: item.id,
           ...item.snippet.localized,
-          thumbnails_small: item.snippet.thumbnails.default.url,
-          thumbnails: item.snippet.thumbnails.standard.url,
+          thumbnails: item.snippet.thumbnails.high.url,
           viewCount: item.statistics.viewCount,
           duration: item.contentDetails.duration
        }));
