@@ -1,34 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
 const useLocalStorage = () => {
-  const [storageData, setStorageData] = useState([]);
+  const [storageData, setStorageData] = useState(null);
 
   useEffect(() => {
-    const arr = JSON.parse(localStorage.getItem('yes-player')); 
-    
-    
-    arr && setStorageData(arr);
-
-    return () => {
-      localStorage.setItem('yes-player', JSON.stringify(storageData));
-      console.log(`data: ${storageData}`);
-      console.log(localStorage('yes-player'));
+    if (!storageData) {
+      const arr = JSON.parse(localStorage.getItem("yes-player"));
+      arr && setStorageData(arr);
     }
-  }, []);
+    
+    localStorage.setItem("yes-player", JSON.stringify(storageData));
+  }, [storageData]);
 
   const addList = item => {
-    const data = [...storageData, item];
-    setStorageData(data);
-    localStorage.setItem('yes-player', JSON.stringify(data));
-  }
+    setStorageData(previousData => [...previousData, item]);
+  };
 
   const removeList = id => {
-    const data = storageData.filter(data => data.id !== id);
-    setStorageData(data);
-    localStorage.setItem('yes-player', JSON.stringify(data));
-  }
+    setStorageData(previousData => previousData.filter(data => data.id != id));
+  };
 
   return [storageData, addList, removeList];
-}
+};
 
 export default useLocalStorage;

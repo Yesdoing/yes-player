@@ -10,7 +10,7 @@ const Container = styled.div`
   top: ${props => (props.isPlayer ? "0vh" : "71vh")};
   width: 100%;
   height: 70vh;
-  background-color: #ecf0f1;
+  background-color: #2f3640;
   transition: top 0.5s ease-in-out;
   color: black;
   font-size: 16px;
