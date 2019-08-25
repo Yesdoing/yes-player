@@ -1,12 +1,26 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import {
-  Add,
   PlaylistAdd,
   ArrowRight,
+  RemoveCircleOutline,
   WatchLaterOutlined
 } from "@material-ui/icons";
+
+const activeEffect = keyframes`
+  0%,
+  100% {
+    background-color: black;
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+  50% {
+    background-color: black;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -15,13 +29,19 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid gray;
-  margin-bottom: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 `;
 
 const IconContainer = styled.div`
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
   &:nth-child(1) {
-  margin-right: 0;
+    margin-right: 0;
+  }
+  &:active {
+    animation: ${activeEffect} 2s ease-in-out;
   }
 `;
 
@@ -53,6 +73,12 @@ const Text = styled.span`
   }
 `;
 
+const ImageContainer = styled.div`
+  width: 50px;
+  height: 40px;
+`;
+
+
 const Thumnail = styled.div`
   width: 50px;
   height: 40px;
@@ -61,28 +87,39 @@ const Thumnail = styled.div`
   background-position: center center;
 `;
 
-function AddComma(num)
-{
-var regexp = /\B(?=(\d{3})+(?!\d))/g;
-return num.replace(regexp, ',');
+function AddComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.replace(regexp, ",");
 }
 
 function timeFormat(str) {
-  const arr = str.slice(2).replace("S", "").split("M");
-  return arr.map(item => {
-    if(item.length === 1) return "0" + item;
-    else if(item.length === 0) return "00"
-    else return item;
-  }).join(":");
+  const arr = str
+    .slice(2)
+    .replace("S", "")
+    .split("M");
+  return arr
+    .map(item => {
+      if (item.length === 1) return "0" + item;
+      else if (item.length === 0) return "00";
+      else return item;
+    })
+    .join(":");
 }
 
-
-const PlayItem = ({id, title, viewCount, duration, AddList, imgUrl }) => {
+const PlayItem = ({
+  id,
+  title,
+  viewCount,
+  duration,
+  handleList,
+  imgUrl,
+  isYoutube
+}) => {
   return (
     <Container>
-      <IconContainer>
+      <ImageContainer>
         <Thumnail img={imgUrl} />
-      </IconContainer>
+      </ImageContainer>
       <TextContainer>
         <TextColumn>
           <Text>{title}</Text>
@@ -98,8 +135,12 @@ const PlayItem = ({id, title, viewCount, duration, AddList, imgUrl }) => {
           <Text>{timeFormat(duration)}</Text>
         </TextColumn>
       </TextContainer>
-      <IconContainer onClick={() => AddList(id)}>
-        <PlaylistAdd fontSize="small" />
+      <IconContainer onClick={() => handleList(id)}>
+        {isYoutube ? (
+          <PlaylistAdd fontSize="small" />
+        ) : (
+          <RemoveCircleOutline fontSize="small" />
+        )}
       </IconContainer>
     </Container>
   );
@@ -107,10 +148,11 @@ const PlayItem = ({id, title, viewCount, duration, AddList, imgUrl }) => {
 
 PlayItem.propTypes = {
   title: PropTypes.string.isRequired,
-  viewCount: PropTypes.number.isRequired,
+  viewCount: PropTypes.string.isRequired,
   duration: PropTypes.string.isRequired,
-  AddList: PropTypes.func.isRequired,
+  handleList: PropTypes.func.isRequired,
   imgUrl: PropTypes.string.isRequired,
+  isYoutube: PropTypes.bool.isRequired
 };
 
 export default PlayItem;
