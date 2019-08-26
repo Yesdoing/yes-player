@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center; 
   justify-content: center;
+  left: ${props => props.isList ? "-100vw" : "0"};
+  transition: left 0.5s ease-in-out;
 `;
 
 const ImageContainer = styled.div`
@@ -20,7 +23,7 @@ const ImageContainer = styled.div`
 const JacketImage = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url("https://i1.sndcdn.com/artworks-000579908738-4b0so0-t500x500.jpg");
+  background-image: url(${props => props.currentMusic ? props.currentMusic.thumbnails : "https://i1.sndcdn.com/artworks-000579908738-4b0so0-t500x500.jpg"});
   background-size: cover;
   background-position: center center;
   border-radius: 50%;
@@ -45,19 +48,23 @@ const Artist = styled.span`
   text-align: center;
 `;
 
-const AlbumJacket = () => {
-
+const AlbumJacket = ({ isList, currentMusic }) => {
   return (
-    <Container>
+    <Container isList={isList}>
       <ImageContainer>
-        <JacketImage />
+        <JacketImage currentMusic={currentMusic} />
       </ImageContainer>
       <TitleContainer>
-        <Title>In These Shadows</Title>
-        <Artist>Fycth feat. Carmen Forbes</Artist>
+        <Title>{currentMusic ? currentMusic.title : "Select Music"}</Title>
+        <Artist>{currentMusic ? currentMusic.channelTitle : ""}</Artist>
       </TitleContainer>
     </Container>
   )
+}
+
+AlbumJacket.propTypes = {
+  isList: PropTypes.bool.isRequired,
+  currentMusic: PropTypes.objectOf(PropTypes.any)
 }
 
 export default AlbumJacket;
