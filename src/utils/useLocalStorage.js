@@ -13,10 +13,11 @@ const useLocalStorage = () => {
   }, [storageData]);
 
   const addList = item => {
-    setStorageData(previousData => [...previousData, item]);
+    setStorageData(previousData => previousData ? [...previousData, item] : [item]);
   };
 
-  const removeList = id => {
+  const removeList = (e, id) => {
+    e.stopPropagation();
     setStorageData(previousData => previousData.filter(data => data.id != id));
   };
 
