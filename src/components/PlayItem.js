@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import PropTypes from "prop-types";
 import {
   PlaylistAdd,
@@ -22,6 +22,10 @@ const activeEffect = keyframes`
   }
 `;
 
+
+const animation = props => props.isEvent && css`${activeEffect} 2s ease-in-out`;
+
+
 const Container = styled.div`
   width: 100%;
   height: 50px;
@@ -41,7 +45,7 @@ const IconContainer = styled.div`
     margin-right: 0;
   }
   &:active {
-    animation: ${activeEffect} 2s ease-in-out;
+    animation: ${animation};
   }
 `;
 
@@ -113,10 +117,11 @@ const PlayItem = ({
   duration,
   handleList,
   imgUrl,
-  isYoutube
+  isYoutube,
+  setCurrentVidoe
 }) => {
   return (
-    <Container>
+    <Container onClick={(e) => setCurrentVidoe(e, id)}>
       <ImageContainer>
         <Thumnail img={imgUrl} />
       </ImageContainer>
@@ -135,7 +140,7 @@ const PlayItem = ({
           <Text>{timeFormat(duration)}</Text>
         </TextColumn>
       </TextContainer>
-      <IconContainer onClick={() => handleList(id)}>
+      <IconContainer onClick={(e) => handleList(e, id)} isEvent>
         {isYoutube ? (
           <PlaylistAdd fontSize="small" />
         ) : (
@@ -152,7 +157,8 @@ PlayItem.propTypes = {
   duration: PropTypes.string.isRequired,
   handleList: PropTypes.func.isRequired,
   imgUrl: PropTypes.string.isRequired,
-  isYoutube: PropTypes.bool.isRequired
+  isYoutube: PropTypes.bool.isRequired,
+  setCurrentVidoe: PropTypes.func,
 };
 
 export default PlayItem;
