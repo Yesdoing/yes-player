@@ -11,11 +11,11 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   height: 70vh;
-  background-color: #ecf0f1;
+  background-color: #2f3640;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   transition: left 0.5s ease-in-out;
-  color: black;
+  color: #ecf0f1;
   font-size: 16px;
   z-index: 15;
 `;
@@ -101,7 +101,9 @@ const PlayerList = ({
   addMusicList,
   removeMusicList,
   inputValue,
-  onChange
+  onChange,
+  onSubmit,
+  setCurrentVidoe
 }) => {
   const LoadingContainer = () => (
     <ListContainer>
@@ -129,13 +131,14 @@ const PlayerList = ({
           }
           isYoutube={selectedMenu === "YOUTUBE"}
           imgUrl={item.thumbnails}
+          setCurrentVidoe={setCurrentVidoe}
         />
       ));
   }, [data]);
 
   return (
     <Container isList={isList}>
-      <InputContainer>
+      <InputContainer onSubmit={onSubmit}>
         <Input
           placeholder={
             selectedMenu === "YOUTUBE"
@@ -167,8 +170,8 @@ const PlayerList = ({
       </MenuSelector>
       <ListContainer>
         {loading && <LoadingContainer />}
-        {data && data.length > 0 && dataList}
-        {data && data.length === 0 && <EmptyData>데이터가 없습니다.</EmptyData>}
+        {!loading && data && data.length > 0 && dataList}
+        {!loading && data && data.length === 0 && <EmptyData>데이터가 없습니다.</EmptyData>}
       </ListContainer>
     </Container>
   );
@@ -184,7 +187,9 @@ PlayerList.propTypes = {
   addMusicList: PropTypes.func,
   removeMusicList: PropTypes.func,
   inputValue: PropTypes.string.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func,
+  setCurrentVidoe: PropTypes.func,
 };
 
 export default PlayerList;
