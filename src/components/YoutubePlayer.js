@@ -7,10 +7,14 @@ const Container = styled.div`
   position: fixed;
   width: 150px;
   height: 150px;
-  z-index: 100;
+  z-index: -100;
 `;
 
-const YoutubePlayer = ({ player, setPlayer }) => {
+const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
+  function onPlayerStateChange(event) {
+    changeControlState(event.data);
+  }
+
   useEffect(() => {
     if (!player) {
       setPlayer(
@@ -18,7 +22,7 @@ const YoutubePlayer = ({ player, setPlayer }) => {
           width: 150,
           height: 150,
           playerVars: {
-            controls: 0,   
+            controls: 0,
             disablekb: 1,
             fs: 0,
             iv_load_policy: 3,
@@ -26,6 +30,8 @@ const YoutubePlayer = ({ player, setPlayer }) => {
           }
         })
       );
+    } else {
+      player.on("stateChange", onPlayerStateChange);
     }
   });
   return (
