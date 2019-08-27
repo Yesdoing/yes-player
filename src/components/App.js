@@ -28,7 +28,7 @@ let index = 0;
 let id = 0;
 
 function App() {
-  const [isList, setIsList] = useState(true);
+  const [isList, setIsList] = useState(false);
   const [controlState, setControlState] = useState(CONTROLBAR_STATE.LOADING);
   const [selectedMenu, setMenu] = useState("YOUTUBE");
   const [loading, resolved, error, setSearchTerm] = useMusicList("");
@@ -110,7 +110,7 @@ function App() {
 
 
   const changeControlState = playerStatus => {
-    console.log(playerStatus);
+
     switch (playerStatus) {
       case PLAYER_STATE.UNSTARTED:
         setControlState(CONTROLBAR_STATE.LOADING);
