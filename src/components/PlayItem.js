@@ -7,6 +7,7 @@ import {
   RemoveCircleOutline,
   WatchLaterOutlined
 } from "@material-ui/icons";
+import { timeFormat } from "../utils/utils";
 
 const activeEffect = keyframes`
   0%,
@@ -96,29 +97,18 @@ function AddComma(num) {
   return num.replace(regexp, ",");
 }
 
-function timeFormat(str) {
-  const arr = str
-    .slice(2)
-    .replace("S", "")
-    .split("M");
-  return arr
-    .map(item => {
-      if (item.length === 1) return "0" + item;
-      else if (item.length === 0) return "00";
-      else return item;
-    })
-    .join(":");
-}
 
 const PlayItem = ({
   id,
   title,
   viewCount,
   duration,
-  handleList,
+  addMusicList,
+  removeMusicList,
   imgUrl,
   isYoutube,
-  setCurrentVidoe
+  setCurrentVidoe,
+  itemIndex
 }) => {
   return (
     <Container onClick={(e) => setCurrentVidoe(e, id)}>
@@ -140,7 +130,7 @@ const PlayItem = ({
           <Text>{timeFormat(duration)}</Text>
         </TextColumn>
       </TextContainer>
-      <IconContainer onClick={(e) => handleList(e, id)} isEvent>
+      <IconContainer onClick={(e) => isYoutube ? addMusicList(e, id) : removeMusicList(e, itemIndex) } isEvent>
         {isYoutube ? (
           <PlaylistAdd fontSize="small" />
         ) : (
@@ -155,10 +145,12 @@ PlayItem.propTypes = {
   title: PropTypes.string.isRequired,
   viewCount: PropTypes.string.isRequired,
   duration: PropTypes.string.isRequired,
-  handleList: PropTypes.func.isRequired,
+  addMusicList: PropTypes.func,
+  removeMusicList: PropTypes.func,
   imgUrl: PropTypes.string.isRequired,
   isYoutube: PropTypes.bool.isRequired,
   setCurrentVidoe: PropTypes.func,
+  itemIndex: PropTypes.number.isRequired
 };
 
 export default PlayItem;

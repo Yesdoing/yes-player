@@ -126,12 +126,12 @@ const PlayerList = ({
           title={item.title}
           viewCount={item.viewCount}
           duration={item.duration}
-          handleList={
-            selectedMenu === "YOUTUBE" ? addMusicList : removeMusicList
-          }
+          addMusicList={addMusicList}
+          removeMusicList={removeMusicList}
           isYoutube={selectedMenu === "YOUTUBE"}
           imgUrl={item.thumbnails}
           setCurrentVidoe={setCurrentVidoe}
+          itemIndex={index}
         />
       ));
   }, [data]);
