@@ -41,4 +41,10 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
   );
 };
 
+YoutubePlayer.propTypes = {
+  player: PropTypes.object,
+  setPlayer: PropTypes.func,
+  changeControlState: PropTypes.func
+};
+
 export default YoutubePlayer;

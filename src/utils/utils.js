@@ -11,3 +11,15 @@ export function timeFormat(str) {
     })
     .join(":");
 }
+
+export const getCurrentTime = (seconds) => {
+  if(!seconds) return "00:00";
+
+  const mind = seconds % (60 * 60);
+  const minutes = Math.floor(mind / 60);
+
+  const secd = mind % 60;
+  const second = Math.ceil(secd);
+
+  return `${minutes < 10 ? '0'+minutes : minutes}:${second < 10 ? '0' + second : second}`;
+}
