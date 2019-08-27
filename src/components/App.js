@@ -36,6 +36,8 @@ function App() {
   const [storageData, addList, removeList] = useLocalStorage();
   const [inputValue, setInputValue] = useState("");
   const [currentMusic, setCurrentMusic] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   
 
   const handlePlay = () => {
@@ -46,22 +48,33 @@ function App() {
     player.pauseVideo();
   };
 
+  const getCurrentTime = () => {
+    player.getCurrentTime().then(res => setCurrentTime(Math.round(res)));
+  }
+
   function handleNextSong() {
     if(!currentMusic) return;
-    
-    player.stopVideo()
+    player.stopVideo();
+    clearInterval(id); 
     index = index + 1 >= storageData.length ? 0 : index + 1;
     setCurrentMusic(storageData[index]);
-    player.cueVideoById(storageData[index].id, 0, "small");
+    player.loadVideoById(storageData[index].id, 0, "small");
+  }
+
+  const handleEndSong = () => {
+    if(!currentMusic) return;
+    index = index + 1 >= storageData.length ? 0 : index + 1;
+    setCurrentMusic(storageData[index]);
+    player.loadVideoById(storageData[index].id, 0, "small");
   }
 
   function handlePrevSong() {
     if(!currentMusic) return;
-
     player.stopVideo();
+    clearInterval(id);
     index = index - 1 < 0 ? storageData.length - 1 : index - 1;
     setCurrentMusic(storageData[index]);
-    player.cueVideoById(storageData[index].id, 0, "small");
+    player.loadVideoById(storageData[index].id, 0, "small");
   }
 
   function handleList() {
@@ -89,22 +102,36 @@ function App() {
     }
   };
 
+  function handleSliderOnChange(percentage) {
+    const seconds = Math.round(duration * (percentage / 100));
+    setCurrentTime(seconds);
+    player.seekTo(seconds);
+  }
+
+
   const changeControlState = playerStatus => {
+    console.log(playerStatus);
     switch (playerStatus) {
       case PLAYER_STATE.UNSTARTED:
         setControlState(CONTROLBAR_STATE.LOADING);
         break;
       case PLAYER_STATE.ENDED:
+        clearInterval(id); 
         setControlState(CONTROLBAR_STATE.LOADING);
+        handleEndSong();
         break;
       case PLAYER_STATE.PLAYING:
         setControlState(CONTROLBAR_STATE.PLAYING);
+        player.getDuration().then(res => setDuration(Math.round(res)));
+        id = setInterval(getCurrentTime, 1000);
         break;
       case PLAYER_STATE.PAUSED:
         setControlState(CONTROLBAR_STATE.PAUSED);
+        clearInterval(id);
         break;
       case PLAYER_STATE.BUFFERING:
         setControlState(CONTROLBAR_STATE.LOADING);
+        clearInterval(id);
         break;
       case PLAYER_STATE.VIDEO_CUED:
         setControlState(CONTROLBAR_STATE.NOT_STARTED);
@@ -149,7 +176,11 @@ function App() {
           setCurrentVidoe={setCurrentVidoe}
         />
         <ControlContainer>
-          <Slider />
+          <Slider 
+            currentValue={currentTime / duration * 100}
+            duration={duration}
+            onChange={handleSliderOnChange}
+          />
           <ControlBar
             handlePlay={handlePlay}
             handlePause={handlePause}

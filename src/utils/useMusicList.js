@@ -16,7 +16,6 @@ export default function useMusicList(keyword) {
        
        const youtubeIdList = items.map(item => item.id.videoId).join(',');
        const { data: { items: results }} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${youtubeIdList}&key=${process.env.REACT_APP_API_KEY}`);
-       console.log(results);
        const data = results && results.length > 0 && results.map( item => ({
           id: item.id,
           ...item.snippet.localized,
@@ -39,42 +38,3 @@ export default function useMusicList(keyword) {
 
   return [loading, resolved, error, setSearchTerm];
 }
-
-/*
-    
-import defaultAxios from "axios";
-import { useState, useEffect } from "react";
-
-export const useAxios = (opts, axiosInstance = defaultAxios) => {
-  const [state, setState] = useState({
-    loading: true,
-    error: null,
-    data: null
-  });
-  const [trigger, setTrigger] = useState(0);
-  if (!opts.url) {
-    return;
-  }
-  const refetch = () => {
-    setState({
-      ...state,
-      loading: true
-    });
-    setTrigger(Date.now());
-  };
-  useEffect(() => {
-    axiosInstance(opts)
-      .then(data => {
-        setState({
-          ...state,
-          loading: false,
-          data
-        });
-      })
-      .catch(error => {
-        setState({ ...state, loading: false, error });
-      });
-  }, [trigger]);
-  return { ...state, refetch };
-};
-*/
