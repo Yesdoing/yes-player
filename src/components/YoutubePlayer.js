@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import YTPlayer from "youtube-player";
@@ -33,7 +33,8 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
     } else {
       player.on("stateChange", onPlayerStateChange);
     }
-  });
+  }, [player]);
+
   return (
     <Container>
       <div id="youtube-player" />
@@ -47,4 +48,4 @@ YoutubePlayer.propTypes = {
   changeControlState: PropTypes.func
 };
 
-export default YoutubePlayer;
+export default React.memo(YoutubePlayer);
