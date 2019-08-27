@@ -1,0 +1,15 @@
+export const PLAYER_STATE = {
+  UNSTARTED: -1,
+  ENDED: 0,
+  PLAYING: 1,
+  PAUSED: 2,
+  BUFFERING: 3,
+  VIDEO_CUED: 5
+};
+
+export const CONTROLBAR_STATE = {
+  LOADING: 0,
+  PLAYING: 1,
+  PAUSED: 2,
+  NOT_STARTED: 3
+}
