@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import YTPlayer from "youtube-player";
@@ -14,11 +14,13 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
   function onPlayerStateChange(event) {
     changeControlState(event.data);
   }
+  
+  const ref = useRef();
 
   useEffect(() => {
     if (!player) {
       setPlayer(
-        YTPlayer("youtube-player", {
+        YTPlayer(ref.current, {
           width: 150,
           height: 150,
           playerVars: {
@@ -33,11 +35,15 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
     } else {
       player.on("stateChange", onPlayerStateChange);
     }
+
+    return () => {
+      console.log('remove');
+    }
   }, [player]);
 
   return (
     <Container>
-      <div id="youtube-player" />
+      <div ref={ref} />
     </Container>
   );
 };
@@ -48,4 +54,4 @@ YoutubePlayer.propTypes = {
   changeControlState: PropTypes.func
 };
 
-export default React.memo(YoutubePlayer);
+export default YoutubePlayer;
