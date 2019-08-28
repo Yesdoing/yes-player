@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import GlobalStyles from "components/GlobalStyles";
 import Footer from "./Footer";
@@ -24,9 +24,6 @@ const ControlContainer = styled.div`
   background-color: #2f3640;
 `;
 
-let index = 0;
-let id = 0;
-
 function App() {
   const [isList, setIsList] = useState(false);
   const [controlState, setControlState] = useState(CONTROLBAR_STATE.LOADING);
@@ -38,6 +35,8 @@ function App() {
   const [currentMusic, setCurrentMusic] = useState(null);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const currentMusicIndex = useRef(0);
+  const clearIntervalId = useRef(0);
   
 
   const handlePlay = () => {
@@ -55,26 +54,26 @@ function App() {
   function handleNextSong() {
     if(!currentMusic) return;
     player.stopVideo();
-    clearInterval(id); 
-    index = index + 1 >= storageData.length ? 0 : index + 1;
-    setCurrentMusic(storageData[index]);
-    player.loadVideoById(storageData[index].id, 0, "small");
+    clearInterval(clearIntervalId.current); 
+    currentMusicIndex.current = currentMusicIndex.current + 1 >= storageData.length ? 0 : currentMusicIndex.current + 1;
+    setCurrentMusic(storageData[currentMusicIndex.current]);
+    player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
   }
 
   const handleEndSong = () => {
     if(!currentMusic) return;
-    index = index + 1 >= storageData.length ? 0 : index + 1;
-    setCurrentMusic(storageData[index]);
-    player.loadVideoById(storageData[index].id, 0, "small");
+    currentMusicIndex.current = currentMusicIndex.current + 1 >= storageData.length ? 0 : currentMusicIndex.current + 1;
+    setCurrentMusic(storageData[currentMusicIndex.current]);
+    player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
   }
 
   function handlePrevSong() {
     if(!currentMusic) return;
     player.stopVideo();
-    clearInterval(id);
-    index = index - 1 < 0 ? storageData.length - 1 : index - 1;
-    setCurrentMusic(storageData[index]);
-    player.loadVideoById(storageData[index].id, 0, "small");
+    clearInterval(clearIntervalId.current);
+    currentMusicIndex.current = currentMusicIndex.current - 1 < 0 ? storageData.length - 1 : currentMusicIndex.current - 1;
+    setCurrentMusic(storageData[currentMusicIndex.current]);
+    player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
   }
 
   function handleList() {
@@ -108,33 +107,32 @@ function App() {
     player.seekTo(seconds);
   }
 
-
   const changeControlState = playerStatus => {
-
     switch (playerStatus) {
       case PLAYER_STATE.UNSTARTED:
         setControlState(CONTROLBAR_STATE.LOADING);
         break;
       case PLAYER_STATE.ENDED:
-        clearInterval(id); 
+        clearInterval(clearIntervalId.current); 
         setControlState(CONTROLBAR_STATE.LOADING);
         handleEndSong();
         break;
       case PLAYER_STATE.PLAYING:
         setControlState(CONTROLBAR_STATE.PLAYING);
         player.getDuration().then(res => setDuration(Math.round(res)));
-        id = setInterval(getCurrentTime, 1000);
+        clearIntervalId.current = setInterval(getCurrentTime, 1000);
         break;
       case PLAYER_STATE.PAUSED:
         setControlState(CONTROLBAR_STATE.PAUSED);
-        clearInterval(id);
+        clearInterval(clearIntervalId.current);
         break;
       case PLAYER_STATE.BUFFERING:
         setControlState(CONTROLBAR_STATE.LOADING);
-        clearInterval(id);
+        clearInterval(clearIntervalId.current);
         break;
       case PLAYER_STATE.VIDEO_CUED:
         setControlState(CONTROLBAR_STATE.NOT_STARTED);
+        setCurrentMusic({...storageData[currentMusicIndex.current]});
         break;
       default:
         return;
@@ -146,12 +144,12 @@ function App() {
       addMusicList(e, id);
       player.cueVideoById(id, 0, "small");
       setCurrentMusic(resolved.filter(item => item.id === id)[0]);
-      index = storageData.length;
+      currentMusicIndex.current = storageData.length;
     } else {
       player.cueVideoById(id, 0, "small");
       const data = storageData.filter(item => item.id === id)[0];
       setCurrentMusic(data);
-      index = storageData.findIndex(item => item.id === id);
+      currentMusicIndex.current = storageData.findIndex(item => item.id === id);
     }
   };
 
