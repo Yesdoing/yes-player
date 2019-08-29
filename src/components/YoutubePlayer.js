@@ -35,10 +35,6 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
     } else {
       player.on("stateChange", onPlayerStateChange);
     }
-
-    return () => {
-      console.log('remove');
-    }
   }, [player]);
 
   return (

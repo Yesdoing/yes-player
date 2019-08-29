@@ -35,9 +35,6 @@ const CustomSlider = styled(AntSlider)`
 `;
 
 const Slider = ({ currentValue, onChange, duration }) => {
-  function onAfterChange(value) {
-    console.log("onAfterChange: ", value);
-  }
 
   const currentTime = Math.ceil(duration * (currentValue / 100));
 
@@ -47,7 +44,6 @@ const Slider = ({ currentValue, onChange, duration }) => {
       <CustomSlider
         value={typeof currentValue === "number" ? currentValue : 0}
         onChange={onChange}
-        onAfterChange={onAfterChange}
       />
       <Time>{getCurrentTime(duration)}</Time>
     </Container>
