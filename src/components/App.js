@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import styled from "styled-components";
 import GlobalStyles from "components/GlobalStyles";
 import Footer from "./Footer";
@@ -35,9 +35,15 @@ function App() {
   const [currentMusic, setCurrentMusic] = useState(null);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isEndSong, setEndSong] = useState(false);
   const currentMusicIndex = useRef(0);
   const clearIntervalId = useRef(0);
-  
+
+  useEffect( () => {
+    if(!isEndSong) return;
+    handleEndSong();
+    setEndSong(false);
+  }, [isEndSong]);
 
   const handlePlay = () => {
     player.playVideo();
@@ -115,7 +121,7 @@ function App() {
       case PLAYER_STATE.ENDED:
         clearInterval(clearIntervalId.current); 
         setControlState(CONTROLBAR_STATE.LOADING);
-        handleEndSong();
+        setEndSong(true);
         break;
       case PLAYER_STATE.PLAYING:
         setControlState(CONTROLBAR_STATE.PLAYING);
