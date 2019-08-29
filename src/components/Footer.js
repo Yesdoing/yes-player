@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { PlaylistAdd, PlaylistPlay } from "@material-ui/icons";
+import { PlaylistAdd } from "@material-ui/icons";
 
 const Container = styled.footer`
   width: 100%;

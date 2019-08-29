@@ -104,6 +104,7 @@ function App() {
     e.preventDefault();
     if (inputValue !== "") {
       setSearchTerm(inputValue);
+      selectedMenu !== "YOUTUBE" && setMenu("YOUTUBE");
     }
   };
 
