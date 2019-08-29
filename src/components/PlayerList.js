@@ -117,7 +117,8 @@ const PlayerList = ({
   );
 
   const dataList = useMemo(() => {
-    return data &&
+    return (
+      data &&
       data.length > 0 &&
       data.map((item, index) => (
         <PlayItem
@@ -133,18 +134,15 @@ const PlayerList = ({
           setCurrentVidoe={setCurrentVidoe}
           itemIndex={index}
         />
-      ));
+      ))
+    );
   }, [data]);
 
   return (
     <Container isList={isList}>
       <InputContainer onSubmit={onSubmit}>
         <Input
-          placeholder={
-            selectedMenu === "YOUTUBE"
-              ? "Enter URL or Song Name"
-              : "Search Your PLAYLIST"
-          }
+          placeholder={"Enter URL or Song Name"}
           value={inputValue}
           onChange={onChange}
         />
@@ -171,7 +169,13 @@ const PlayerList = ({
       <ListContainer>
         {loading && <LoadingContainer />}
         {!loading && data && data.length > 0 && dataList}
-        {!loading && data && data.length === 0 && <EmptyData>데이터가 없습니다.</EmptyData>}
+        {!loading && data && data.length === 0 && (
+          <EmptyData>
+            {selectedMenu === "YOUTUBE"
+              ? "검색된 음악이 없습니다."
+              : "저장된 음악이 없습니다."}
+          </EmptyData>
+        )}
       </ListContainer>
     </Container>
   );
@@ -189,7 +193,7 @@ PlayerList.propTypes = {
   inputValue: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  setCurrentVidoe: PropTypes.func,
+  setCurrentVidoe: PropTypes.func
 };
 
 export default PlayerList;

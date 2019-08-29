@@ -55,7 +55,7 @@ const AlbumJacket = ({ isList, currentMusic }) => {
         <JacketImage currentMusic={currentMusic} />
       </ImageContainer>
       <TitleContainer>
-        <Title>{currentMusic ? currentMusic.title : "Select Music"}</Title>
+        <Title>{currentMusic ? currentMusic.title : "선택된 음악이 없습니다."}</Title>
         <Artist>{currentMusic ? currentMusic.channelTitle : ""}</Artist>
       </TitleContainer>
     </Container>
