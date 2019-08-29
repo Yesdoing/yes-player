@@ -138,7 +138,6 @@ function App() {
         break;
       case PLAYER_STATE.VIDEO_CUED:
         setControlState(CONTROLBAR_STATE.NOT_STARTED);
-        setCurrentMusic({...storageData[currentMusicIndex.current]});
         break;
       default:
         return;
