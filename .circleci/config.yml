@@ -28,7 +28,7 @@ jobs:
             git config user.name "yesdoing"
       - add_ssh_keys:
           fingerprints:
-            - "99:28:4a:08:87:06:d7:d6:32:32:95:1f:90:46:a4:7f:97:4a:38:e1"
+            - "77:49:c5:d1:11:d5:0c:5e:61:ab:d2:46:0e:af:1c:5e"
 
       - run: yarn run deploy
 
