@@ -11,13 +11,15 @@ const Container = styled.div`
 `;
 
 const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
-  function onPlayerStateChange(event) {
-    changeControlState(event.data);
-  }
   
+
   const ref = useRef();
 
   useEffect(() => {
+    function onPlayerStateChange(event) {
+      changeControlState(event.data);
+    }
+    
     if (!player) {
       setPlayer(
         YTPlayer(ref.current, {
@@ -35,7 +37,7 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
     } else {
       player.on("stateChange", onPlayerStateChange);
     }
-  }, [player]);
+  }, [player, setPlayer, changeControlState]);
 
   return (
     <Container>
