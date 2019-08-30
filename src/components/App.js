@@ -39,11 +39,6 @@ function App() {
   const currentMusicIndex = useRef(0);
   const clearIntervalId = useRef(0);
 
-  useEffect( () => {
-    if(!isEndSong) return;
-    handleEndSong();
-    setEndSong(false);
-  }, [isEndSong]);
 
   const handlePlay = () => {
     player.playVideo();
@@ -53,9 +48,6 @@ function App() {
     player.pauseVideo();
   };
 
-  const getCurrentTime = () => {
-    player.getCurrentTime().then(res => setCurrentTime(Math.round(res)));
-  }
 
   function handleNextSong() {
     if(!currentMusic) return;
@@ -66,12 +58,6 @@ function App() {
     player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
   }
 
-  const handleEndSong = () => {
-    if(!currentMusic) return;
-    currentMusicIndex.current = currentMusicIndex.current + 1 >= storageData.length ? 0 : currentMusicIndex.current + 1;
-    setCurrentMusic(storageData[currentMusicIndex.current]);
-    player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
-  }
 
   function handlePrevSong() {
     if(!currentMusic) return;
@@ -114,7 +100,12 @@ function App() {
     player.seekTo(seconds);
   }
 
-  const changeControlState = playerStatus => {
+  const changeControlState = useCallback(playerStatus => {
+    const getCurrentTime = () => {
+      player.getCurrentTime().then(res => setCurrentTime(Math.round(res)));
+    }
+  
+
     switch (playerStatus) {
       case PLAYER_STATE.UNSTARTED:
         setControlState(CONTROLBAR_STATE.LOADING);
@@ -143,7 +134,7 @@ function App() {
       default:
         return;
     }
-  };
+  }, [player]);
 
   const setCurrentVidoe = (e, id) => {
     if (selectedMenu === "YOUTUBE") {
@@ -158,6 +149,20 @@ function App() {
       currentMusicIndex.current = storageData.findIndex(item => item.id === id);
     }
   };
+
+  useEffect( () => {
+    const handleEndSong = () => {
+      if(!currentMusic) return;
+      currentMusicIndex.current = currentMusicIndex.current + 1 >= storageData.length ? 0 : currentMusicIndex.current + 1;
+      setCurrentMusic(storageData[currentMusicIndex.current]);
+      player.loadVideoById(storageData[currentMusicIndex.current].id, 0, "small");
+    }
+  
+
+    if(!isEndSong) return;
+    handleEndSong();
+    setEndSong(false);
+  }, [isEndSong, currentMusic, player, storageData]);
 
   return (
     <>
