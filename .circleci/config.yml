@@ -22,10 +22,11 @@ jobs:
           key: v2-dependencies-{{ checksum "package.json" }}
 
       - run:
+          name: Install and configure dependencies
           command: |
-            git config --global user.email "fkrmtleo12@gmail.com"
-            git config --global user.name "yesdoing"
-
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "fkrmtleo12@gmail.com"
+            git config user.name "yesdoing"
       - add_ssh_keys:
           fingerprints:
             - "b7:3e:f6:a2:9c:16:31:f4:fa:5f:1f:a5:f6:e7:b7:2e"
