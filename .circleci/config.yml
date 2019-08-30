@@ -28,7 +28,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - b7:3e:f6:a2:9c:16:31:f4:fa:5f:1f:a5:f6:e7:b7:2e
+            - "b7:3e:f6:a2:9c:16:31:f4:fa:5f:1f:a5:f6:e7:b7:2e"
 
       - run: yarn run deploy
 
