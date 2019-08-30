@@ -1,12 +1,5 @@
 version: 2
 jobs:
-  deploy-job:
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - b7:3e:f6:a2:9c:16:31:f4:fa:5f:1f:a5:f6:e7:b7:2e
-
-
   build:
     docker:
       - image: circleci/node:12.8.0
@@ -32,4 +25,11 @@ jobs:
           command: |
             git config --global user.email "fkrmtleo12@gmail.com"
             git config --global user.name "yesdoing"
-            yarn run deploy
+
+      - add_ssh_keys:
+          fingerprints:
+            - b7:3e:f6:a2:9c:16:31:f4:fa:5f:1f:a5:f6:e7:b7:2e
+
+      - run: yarn run deploy
+
+      
