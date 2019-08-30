@@ -136,7 +136,7 @@ const PlayerList = ({
         />
       ))
     );
-  }, [data]);
+  }, [data, addMusicList, removeMusicList, selectedMenu, setCurrentVidoe]);
 
   return (
     <Container isList={isList}>
