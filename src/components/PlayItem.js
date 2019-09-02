@@ -29,7 +29,7 @@ const animation = props => props.isEvent && css`${activeEffect} 2s ease-in-out`;
 
 const Container = styled.div`
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
