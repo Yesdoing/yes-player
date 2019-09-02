@@ -32,7 +32,8 @@ const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
             disablekb: 1,
             fs: 0,
             iv_load_policy: 3,
-            modestbranding: 1
+            modestbranding: 1,
+            playsinline: 1
           }
         })
       );
