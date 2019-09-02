@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3d4ff31c678566a5b8c66d05f8b372ac",
+    "revision": "1ccce2ab20141a4f2f30c1e5736d3fd2",
     "url": "/yes-player/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/yes-player/static/js/2.0d0f6777.chunk.js"
   },
   {
-    "revision": "2d1219f71abcc4c1911c",
-    "url": "/yes-player/static/js/main.b4e91fe1.chunk.js"
+    "revision": "b69a091a1a720ddae8c6",
+    "url": "/yes-player/static/js/main.880b4b3a.chunk.js"
   },
   {
     "revision": "9f99f38faf8ee996662d",
