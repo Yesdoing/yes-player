@@ -8,6 +8,8 @@ const Container = styled.div`
   width: 150px;
   height: 150px;
   z-index: -100;
+  top: 0;
+  left: 0;
 `;
 
 const YoutubePlayer = ({ player, setPlayer, changeControlState }) => {
