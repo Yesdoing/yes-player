@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7c4892bc30c574f7008ebae0b6adbd93",
+    "revision": "0ea55487079e6119926cd6e9957323b4",
     "url": "/yes-player/index.html"
   },
   {
-    "revision": "5ae4fb918988dd917c2f",
+    "revision": "1bacf309d5df844c2aff",
     "url": "/yes-player/static/css/2.e8d046a2.chunk.css"
   },
   {
-    "revision": "5ae4fb918988dd917c2f",
-    "url": "/yes-player/static/js/2.0d0f6777.chunk.js"
+    "revision": "1bacf309d5df844c2aff",
+    "url": "/yes-player/static/js/2.afb9b6d9.chunk.js"
   },
   {
     "revision": "d4c40aa0dbe3e7301a04",
